@@ -1,0 +1,1 @@
+wasm-tools dump build-cmake/test.wasm > out.txt
