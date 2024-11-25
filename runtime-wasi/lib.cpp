@@ -1,4 +1,4 @@
-// Copyright (C) 2022-2024 Exaloop Inc. <https://exaloop.io>
+// Copyright (C) 2022 Exaloop Inc. <https://exaloop.io>
 
 #include <cassert>
 #include <cerrno>
@@ -13,35 +13,31 @@
 #include <fmt/format.h>
 #include <fstream>
 #include <iostream>
-#include <mutex>
+// #include <mutex>
 #include <sstream>
 #include <string>
-#include <thread>
+// #include <thread>
 #include <unistd.h>
 #include <unwind.h>
 #include <vector>
 
-#define GC_THREADS
+// #define GC_THREADS
 #include "lib.h"
-#include <gc.h>
-
-#define FASTFLOAT_ALLOWS_LEADING_PLUS
-#define FASTFLOAT_SKIP_WHITE_SPACE
-#include "fast_float/fast_float.h"
+// #include <gc.h>
 
 /*
  * General
  */
 
 // OpenMP patch with GC callbacks
-typedef int (*gc_setup_callback)(GC_stack_base *);
-typedef void (*gc_roots_callback)(void *, void *);
-extern "C" void __kmpc_set_gc_callbacks(gc_setup_callback get_stack_base,
-                                        gc_setup_callback register_thread,
-                                        gc_roots_callback add_roots,
-                                        gc_roots_callback del_roots);
+// typedef int (*gc_setup_callback)(GC_stack_base *);
+// typedef void (*gc_roots_callback)(void *, void *);
+// extern "C" void __kmpc_set_gc_callbacks(gc_setup_callback get_stack_base,
+//                                         gc_setup_callback register_thread,
+//                                         gc_roots_callback add_roots,
+//                                         gc_roots_callback del_roots);
 
-void seq_exc_init(int flags);
+void seq_exc_init();
 
 #ifdef CODON_GPU
 void seq_nvptx_init();
@@ -50,12 +46,12 @@ void seq_nvptx_init();
 int seq_flags;
 
 SEQ_FUNC void seq_init(int flags) {
-  GC_INIT();
-  GC_set_warn_proc(GC_ignore_warn_proc);
-  GC_allow_register_threads();
-  __kmpc_set_gc_callbacks(GC_get_stack_base, (gc_setup_callback)GC_register_my_thread,
-                          GC_add_roots, GC_remove_roots);
-  seq_exc_init(flags);
+  // GC_INIT();
+  // GC_set_warn_proc(GC_ignore_warn_proc);
+  // GC_allow_register_threads();
+  // __kmpc_set_gc_callbacks(GC_get_stack_base, (gc_setup_callback)GC_register_my_thread,
+  //                         GC_add_roots, GC_remove_roots);
+  seq_exc_init();
 #ifdef CODON_GPU
   seq_nvptx_init();
 #endif
@@ -141,9 +137,9 @@ SEQ_FUNC seq_int_t seq_mktime(seq_time_t *time) {
   return mktime(&result);
 }
 
-SEQ_FUNC void seq_sleep(double secs) {
-  std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1>>(secs));
-}
+// SEQ_FUNC void seq_sleep(double secs) {
+//   std::this_thread::sleep_for(std::chrono::duration<double, std::ratio<1>>(secs));
+// }
 
 extern char **environ;
 SEQ_FUNC char **seq_env() { return environ; }
@@ -151,9 +147,9 @@ SEQ_FUNC char **seq_env() { return environ; }
 /*
  * GC
  */
-#define USE_STANDARD_MALLOC 0
+#define USE_STANDARD_MALLOC 1
 
-SEQ_FUNC void *seq_alloc(size_t n) {
+SEQ_FUNC void *seq_alloc(seq_int_t n) {
 #if USE_STANDARD_MALLOC
   return malloc(n);
 #else
@@ -161,7 +157,7 @@ SEQ_FUNC void *seq_alloc(size_t n) {
 #endif
 }
 
-SEQ_FUNC void *seq_alloc_atomic(size_t n) {
+SEQ_FUNC void *seq_alloc_atomic(seq_int_t n) {
 #if USE_STANDARD_MALLOC
   return malloc(n);
 #else
@@ -169,23 +165,29 @@ SEQ_FUNC void *seq_alloc_atomic(size_t n) {
 #endif
 }
 
-SEQ_FUNC void *seq_alloc_uncollectable(size_t n) {
+SEQ_FUNC void *seq_calloc(size_t m, size_t n) {
 #if USE_STANDARD_MALLOC
-  return malloc(n);
+  return calloc(m, n);
 #else
-  return GC_MALLOC_UNCOLLECTABLE(n);
+  size_t s = m * n;
+  void *p = GC_MALLOC(s);
+  memset(p, 0, s);
+  return p;
 #endif
 }
 
-SEQ_FUNC void *seq_alloc_atomic_uncollectable(size_t n) {
+SEQ_FUNC void *seq_calloc_atomic(size_t m, size_t n) {
 #if USE_STANDARD_MALLOC
-  return malloc(n);
+  return calloc(m, n);
 #else
-  return GC_MALLOC_ATOMIC_UNCOLLECTABLE(n);
+  size_t s = m * n;
+  void *p = GC_MALLOC_ATOMIC(s);
+  memset(p, 0, s);
+  return p;
 #endif
 }
 
-SEQ_FUNC void *seq_realloc(void *p, size_t newsize, size_t oldsize) {
+SEQ_FUNC void *seq_realloc(void *p, seq_int_t newsize, seq_int_t oldsize) {
 #if USE_STANDARD_MALLOC
   return realloc(p, newsize);
 #else
@@ -251,7 +253,7 @@ template <> std::string default_format(double n) {
 
 template <typename T> seq_str_t fmt_conv(T n, seq_str_t format, bool *error) {
   *error = false;
-  try {
+  // try {
     if (format.len == 0) {
       return string_conv(default_format(n));
     } else {
@@ -259,14 +261,14 @@ template <typename T> seq_str_t fmt_conv(T n, seq_str_t format, bool *error) {
       return string_conv(
           fmt::format(fmt::runtime(fmt::format(FMT_STRING("{{:{}}}"), fstr)), n));
     }
-  } catch (const std::runtime_error &f) {
-    *error = true;
-    return string_conv(f.what());
-  }
+  // } catch (const std::runtime_error &f) {
+  //   *error = true;
+  //   return string_conv(f.what());
+  // }
 }
 
-SEQ_FUNC seq_str_t seq_str_int(seq_int_t n, seq_str_t format, bool *error) {
-  return fmt_conv<seq_int_t>(n, format, error);
+SEQ_FUNC seq_str_t seq_str_int(seq_int_t n, seq_int_t len, char *format, bool *error) {
+  return fmt_conv<seq_int_t>(n, {len, format}, error);
 }
 
 SEQ_FUNC seq_str_t seq_str_uint(seq_int_t n, seq_str_t format, bool *error) {
@@ -286,20 +288,6 @@ SEQ_FUNC seq_str_t seq_str_str(seq_str_t s, seq_str_t format, bool *error) {
   return fmt_conv(t, format, error);
 }
 
-SEQ_FUNC seq_int_t seq_int_from_str(seq_str_t s, const char **e, int base) {
-  seq_int_t result;
-  auto r = fast_float::from_chars(s.str, s.str + s.len, result, base);
-  *e = (r.ec == std::errc()) ? r.ptr : s.str;
-  return result;
-}
-
-SEQ_FUNC double seq_float_from_str(seq_str_t s, const char **e) {
-  double result;
-  auto r = fast_float::from_chars(s.str, s.str + s.len, result);
-  *e = (r.ec == std::errc() || r.ec == std::errc::result_out_of_range) ? r.ptr : s.str;
-  return result;
-}
-
 /*
  * General I/O
  */
@@ -314,18 +302,20 @@ SEQ_FUNC seq_str_t seq_check_errno() {
   return {0, nullptr};
 }
 
-SEQ_FUNC void seq_print(seq_str_t str) { seq_print_full(str, stdout); }
+SEQ_FUNC void seq_print(seq_str_t str) { seq_print_full(str.len, str.str, stdout); }
 
 static std::ostringstream capture;
-static std::mutex captureLock;
+// static std::mutex captureLock;
 
-SEQ_FUNC void seq_print_full(seq_str_t str, FILE *fo) {
+SEQ_FUNC void seq_print_full(seq_int_t len, char *str, FILE *fo) {
+  printf("%.*s", (int)len, str);
+  return;
   if ((seq_flags & SEQ_FLAG_CAPTURE_OUTPUT) && (fo == stdout || fo == stderr)) {
-    captureLock.lock();
-    capture.write(str.str, str.len);
-    captureLock.unlock();
+    // captureLock.lock();
+    capture.write(str, len);
+    // captureLock.unlock();
   } else {
-    fwrite(str.str, 1, (size_t)str.len, fo);
+    fwrite(str, 1, (size_t)len, fo);
   }
 }
 
@@ -345,49 +335,49 @@ SEQ_FUNC void *seq_stderr() { return stderr; }
  * Threading
  */
 
-SEQ_FUNC void *seq_lock_new() {
-  return (void *)new (seq_alloc_atomic(sizeof(std::timed_mutex))) std::timed_mutex();
-}
+// SEQ_FUNC void *seq_lock_new() {
+//   return (void *)new (seq_alloc_atomic(sizeof(std::timed_mutex))) std::timed_mutex();
+// }
 
-SEQ_FUNC bool seq_lock_acquire(void *lock, bool block, double timeout) {
-  auto *m = (std::timed_mutex *)lock;
-  if (timeout < 0.0) {
-    if (block) {
-      m->lock();
-      return true;
-    } else {
-      return m->try_lock();
-    }
-  } else {
-    return m->try_lock_for(std::chrono::duration<double>(timeout));
-  }
-}
+// SEQ_FUNC bool seq_lock_acquire(void *lock, bool block, double timeout) {
+//   auto *m = (std::timed_mutex *)lock;
+//   if (timeout < 0.0) {
+//     if (block) {
+//       m->lock();
+//       return true;
+//     } else {
+//       return m->try_lock();
+//     }
+//   } else {
+//     return m->try_lock_for(std::chrono::duration<double>(timeout));
+//   }
+// }
 
-SEQ_FUNC void seq_lock_release(void *lock) {
-  auto *m = (std::timed_mutex *)lock;
-  m->unlock();
-}
+// SEQ_FUNC void seq_lock_release(void *lock) {
+//   auto *m = (std::timed_mutex *)lock;
+//   m->unlock();
+// }
 
-SEQ_FUNC void *seq_rlock_new() {
-  return (void *)new (seq_alloc_atomic(sizeof(std::recursive_timed_mutex)))
-      std::recursive_timed_mutex();
-}
+// SEQ_FUNC void *seq_rlock_new() {
+//   return (void *)new (seq_alloc_atomic(sizeof(std::recursive_timed_mutex)))
+//       std::recursive_timed_mutex();
+// }
 
-SEQ_FUNC bool seq_rlock_acquire(void *lock, bool block, double timeout) {
-  auto *m = (std::recursive_timed_mutex *)lock;
-  if (timeout < 0.0) {
-    if (block) {
-      m->lock();
-      return true;
-    } else {
-      return m->try_lock();
-    }
-  } else {
-    return m->try_lock_for(std::chrono::duration<double>(timeout));
-  }
-}
+// SEQ_FUNC bool seq_rlock_acquire(void *lock, bool block, double timeout) {
+//   auto *m = (std::recursive_timed_mutex *)lock;
+//   if (timeout < 0.0) {
+//     if (block) {
+//       m->lock();
+//       return true;
+//     } else {
+//       return m->try_lock();
+//     }
+//   } else {
+//     return m->try_lock_for(std::chrono::duration<double>(timeout));
+//   }
+// }
 
-SEQ_FUNC void seq_rlock_release(void *lock) {
-  auto *m = (std::recursive_timed_mutex *)lock;
-  m->unlock();
-}
+// SEQ_FUNC void seq_rlock_release(void *lock) {
+//   auto *m = (std::recursive_timed_mutex *)lock;
+//   m->unlock();
+// }

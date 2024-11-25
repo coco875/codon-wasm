@@ -1,0 +1,939 @@
+   0x0 | 00 61 73 6d | version 1 (Module)
+       | 01 00 00 00
+   0x8 | 01 a6 80 80 | type section
+       | 80 00      
+   0xe | 07          | 7 count
+--- rec group 0 (implicit) ---
+   0xf | 60 00 01 7e | [type 0] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [], results: [I64] }), shared: false } }
+--- rec group 1 (implicit) ---
+  0x13 | 60 05 7f 7e | [type 1] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [I32, I64, I64, I32, I32], results: [] }), shared: false } }
+       | 7e 7f 7f 00
+--- rec group 2 (implicit) ---
+  0x1b | 60 03 7e 7f | [type 2] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [I64, I32, I32], results: [] }), shared: false } }
+       | 7f 00      
+--- rec group 3 (implicit) ---
+  0x21 | 60 02 7f 7f | [type 3] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [I32, I32], results: [I32] }), shared: false } }
+       | 01 7f      
+--- rec group 4 (implicit) ---
+  0x27 | 60 01 7f 01 | [type 4] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [I32], results: [I64] }), shared: false } }
+       | 7e         
+--- rec group 5 (implicit) ---
+  0x2c | 60 01 7f 00 | [type 5] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [I32], results: [] }), shared: false } }
+--- rec group 6 (implicit) ---
+  0x30 | 60 00 01 7f | [type 6] SubType { is_final: true, supertype_idx: None, composite_type: CompositeType { inner: Func(FuncType { params: [], results: [I32] }), shared: false } }
+  0x34 | 02 a5 81 80 | import section
+       | 80 00      
+  0x3a | 08          | 8 count
+  0x3b | 03 65 6e 76 | import [memory 0] Import { module: "env", name: "__linear_memory", ty: Memory(MemoryType { memory64: false, shared: false, initial: 1, maximum: None, page_size_log2: None }) }
+       | 0f 5f 5f 6c
+       | 69 6e 65 61
+       | 72 5f 6d 65
+       | 6d 6f 72 79
+       | 02 00 01   
+  0x52 | 03 65 6e 76 | import [global 0] Import { module: "env", name: "__stack_pointer", ty: Global(GlobalType { content_type: I32, mutable: true, shared: false }) }
+       | 0f 5f 5f 73
+       | 74 61 63 6b
+       | 5f 70 6f 69
+       | 6e 74 65 72
+       | 03 7f 01   
+  0x69 | 03 65 6e 76 | import [func 0] Import { module: "env", name: "seq_str_int", ty: Func(1) }
+       | 0b 73 65 71
+       | 5f 73 74 72
+       | 5f 69 6e 74
+       | 00 01      
+  0x7b | 03 65 6e 76 | import [func 1] Import { module: "env", name: "seq_print_full", ty: Func(2) }
+       | 0e 73 65 71
+       | 5f 70 72 69
+       | 6e 74 5f 66
+       | 75 6c 6c 00
+       | 02         
+  0x90 | 03 65 6e 76 | import [func 2] Import { module: "env", name: "strlen", ty: Func(4) }
+       | 06 73 74 72
+       | 6c 65 6e 00
+       | 04         
+  0x9d | 03 65 6e 76 | import [func 3] Import { module: "env", name: "seq_init", ty: Func(5) }
+       | 08 73 65 71
+       | 5f 69 6e 69
+       | 74 00 05   
+  0xac | 03 65 6e 76 | import [func 4] Import { module: "env", name: "seq_stdout", ty: Func(6) }
+       | 0a 73 65 71
+       | 5f 73 74 64
+       | 6f 75 74 00
+       | 06         
+  0xbd | 03 65 6e 76 | import [table 0] Import { module: "env", name: "__indirect_function_table", ty: Table(TableType { element_type: funcref, table64: false, initial: 0, maximum: None, shared: false }) }
+       | 19 5f 5f 69
+       | 6e 64 69 72
+       | 65 63 74 5f
+       | 66 75 6e 63
+       | 74 69 6f 6e
+       | 5f 74 61 62
+       | 6c 65 01 70
+       | 00 00      
+  0xdf | 03 83 80 80 | func section
+       | 80 00      
+  0xe5 | 02          | 2 count
+  0xe6 | 00          | [func 5] type 0
+  0xe7 | 03          | [func 6] type 3
+  0xe8 | 0c 81 80 80 | data count section
+       | 80 00      
+  0xee | 04          | data count 4
+  0xef | 0a f9 8b 80 | code section
+       | 80 00      
+  0xf5 | 02          | 2 count
+============== func 5 ====================
+  0xf6 | b1 0b       | size of function
+  0xf8 | 01          | 1 local blocks
+  0xf9 | 02 7f       | 2 locals of type I32
+  0xfb | 23 80 80 80 | global_get global_index:0
+       | 80 00      
+ 0x101 | 41 a0 02    | i32_const value:288
+ 0x104 | 6b          | i32_sub
+ 0x105 | 22 00       | local_tee local_index:0
+ 0x107 | 24 80 80 80 | global_set global_index:0
+       | 80 00      
+ 0x10d | 41 00       | i32_const value:0
+ 0x10f | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x116 | 21 01       | local_set local_index:1
+ 0x118 | 20 00       | local_get local_index:0
+ 0x11a | 41 00       | i32_const value:0
+ 0x11c | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x120 | 20 00       | local_get local_index:0
+ 0x122 | 41 88 02    | i32_const value:264
+ 0x125 | 6a          | i32_add
+ 0x126 | 42 00       | i64_const value:0
+ 0x128 | 42 00       | i64_const value:0
+ 0x12a | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x130 | 20 00       | local_get local_index:0
+ 0x132 | 41 9f 02    | i32_const value:287
+ 0x135 | 6a          | i32_add
+ 0x136 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x13c | 20 00       | local_get local_index:0
+ 0x13e | 29 03 88 02 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 264, memory: 0 }
+ 0x142 | 20 00       | local_get local_index:0
+ 0x144 | 28 02 90 02 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 272, memory: 0 }
+ 0x148 | 20 01       | local_get local_index:1
+ 0x14a | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x150 | 42 01       | i64_const value:1
+ 0x152 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x158 | 20 01       | local_get local_index:1
+ 0x15a | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x160 | 41 00       | i32_const value:0
+ 0x162 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x169 | 21 01       | local_set local_index:1
+ 0x16b | 20 00       | local_get local_index:0
+ 0x16d | 41 00       | i32_const value:0
+ 0x16f | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x173 | 20 00       | local_get local_index:0
+ 0x175 | 41 f8 01    | i32_const value:248
+ 0x178 | 6a          | i32_add
+ 0x179 | 42 01       | i64_const value:1
+ 0x17b | 42 00       | i64_const value:0
+ 0x17d | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x183 | 20 00       | local_get local_index:0
+ 0x185 | 41 9f 02    | i32_const value:287
+ 0x188 | 6a          | i32_add
+ 0x189 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x18f | 20 00       | local_get local_index:0
+ 0x191 | 29 03 f8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 248, memory: 0 }
+ 0x195 | 20 00       | local_get local_index:0
+ 0x197 | 28 02 80 02 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 256, memory: 0 }
+ 0x19b | 20 01       | local_get local_index:1
+ 0x19d | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x1a3 | 42 01       | i64_const value:1
+ 0x1a5 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x1ab | 20 01       | local_get local_index:1
+ 0x1ad | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x1b3 | 41 00       | i32_const value:0
+ 0x1b5 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x1bc | 21 01       | local_set local_index:1
+ 0x1be | 20 00       | local_get local_index:0
+ 0x1c0 | 41 00       | i32_const value:0
+ 0x1c2 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x1c6 | 20 00       | local_get local_index:0
+ 0x1c8 | 41 e8 01    | i32_const value:232
+ 0x1cb | 6a          | i32_add
+ 0x1cc | 42 01       | i64_const value:1
+ 0x1ce | 42 00       | i64_const value:0
+ 0x1d0 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x1d6 | 20 00       | local_get local_index:0
+ 0x1d8 | 41 9f 02    | i32_const value:287
+ 0x1db | 6a          | i32_add
+ 0x1dc | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x1e2 | 20 00       | local_get local_index:0
+ 0x1e4 | 29 03 e8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 232, memory: 0 }
+ 0x1e8 | 20 00       | local_get local_index:0
+ 0x1ea | 28 02 f0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 240, memory: 0 }
+ 0x1ee | 20 01       | local_get local_index:1
+ 0x1f0 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x1f6 | 42 01       | i64_const value:1
+ 0x1f8 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x1fe | 20 01       | local_get local_index:1
+ 0x200 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x206 | 41 00       | i32_const value:0
+ 0x208 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x20f | 21 01       | local_set local_index:1
+ 0x211 | 20 00       | local_get local_index:0
+ 0x213 | 41 00       | i32_const value:0
+ 0x215 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x219 | 20 00       | local_get local_index:0
+ 0x21b | 41 d8 01    | i32_const value:216
+ 0x21e | 6a          | i32_add
+ 0x21f | 42 02       | i64_const value:2
+ 0x221 | 42 00       | i64_const value:0
+ 0x223 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x229 | 20 00       | local_get local_index:0
+ 0x22b | 41 9f 02    | i32_const value:287
+ 0x22e | 6a          | i32_add
+ 0x22f | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x235 | 20 00       | local_get local_index:0
+ 0x237 | 29 03 d8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 216, memory: 0 }
+ 0x23b | 20 00       | local_get local_index:0
+ 0x23d | 28 02 e0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 224, memory: 0 }
+ 0x241 | 20 01       | local_get local_index:1
+ 0x243 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x249 | 42 01       | i64_const value:1
+ 0x24b | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x251 | 20 01       | local_get local_index:1
+ 0x253 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x259 | 41 00       | i32_const value:0
+ 0x25b | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x262 | 21 01       | local_set local_index:1
+ 0x264 | 20 00       | local_get local_index:0
+ 0x266 | 41 00       | i32_const value:0
+ 0x268 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x26c | 20 00       | local_get local_index:0
+ 0x26e | 41 c8 01    | i32_const value:200
+ 0x271 | 6a          | i32_add
+ 0x272 | 42 03       | i64_const value:3
+ 0x274 | 42 00       | i64_const value:0
+ 0x276 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x27c | 20 00       | local_get local_index:0
+ 0x27e | 41 9f 02    | i32_const value:287
+ 0x281 | 6a          | i32_add
+ 0x282 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x288 | 20 00       | local_get local_index:0
+ 0x28a | 29 03 c8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 200, memory: 0 }
+ 0x28e | 20 00       | local_get local_index:0
+ 0x290 | 28 02 d0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 208, memory: 0 }
+ 0x294 | 20 01       | local_get local_index:1
+ 0x296 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x29c | 42 01       | i64_const value:1
+ 0x29e | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x2a4 | 20 01       | local_get local_index:1
+ 0x2a6 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x2ac | 41 00       | i32_const value:0
+ 0x2ae | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x2b5 | 21 01       | local_set local_index:1
+ 0x2b7 | 20 00       | local_get local_index:0
+ 0x2b9 | 41 00       | i32_const value:0
+ 0x2bb | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x2bf | 20 00       | local_get local_index:0
+ 0x2c1 | 41 b8 01    | i32_const value:184
+ 0x2c4 | 6a          | i32_add
+ 0x2c5 | 42 05       | i64_const value:5
+ 0x2c7 | 42 00       | i64_const value:0
+ 0x2c9 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x2cf | 20 00       | local_get local_index:0
+ 0x2d1 | 41 9f 02    | i32_const value:287
+ 0x2d4 | 6a          | i32_add
+ 0x2d5 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x2db | 20 00       | local_get local_index:0
+ 0x2dd | 29 03 b8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 184, memory: 0 }
+ 0x2e1 | 20 00       | local_get local_index:0
+ 0x2e3 | 28 02 c0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 192, memory: 0 }
+ 0x2e7 | 20 01       | local_get local_index:1
+ 0x2e9 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x2ef | 42 01       | i64_const value:1
+ 0x2f1 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x2f7 | 20 01       | local_get local_index:1
+ 0x2f9 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x2ff | 41 00       | i32_const value:0
+ 0x301 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x308 | 21 01       | local_set local_index:1
+ 0x30a | 20 00       | local_get local_index:0
+ 0x30c | 41 00       | i32_const value:0
+ 0x30e | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x312 | 20 00       | local_get local_index:0
+ 0x314 | 41 a8 01    | i32_const value:168
+ 0x317 | 6a          | i32_add
+ 0x318 | 42 08       | i64_const value:8
+ 0x31a | 42 00       | i64_const value:0
+ 0x31c | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x322 | 20 00       | local_get local_index:0
+ 0x324 | 41 9f 02    | i32_const value:287
+ 0x327 | 6a          | i32_add
+ 0x328 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x32e | 20 00       | local_get local_index:0
+ 0x330 | 29 03 a8 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 168, memory: 0 }
+ 0x334 | 20 00       | local_get local_index:0
+ 0x336 | 28 02 b0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 176, memory: 0 }
+ 0x33a | 20 01       | local_get local_index:1
+ 0x33c | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x342 | 42 01       | i64_const value:1
+ 0x344 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x34a | 20 01       | local_get local_index:1
+ 0x34c | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x352 | 41 00       | i32_const value:0
+ 0x354 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x35b | 21 01       | local_set local_index:1
+ 0x35d | 20 00       | local_get local_index:0
+ 0x35f | 41 00       | i32_const value:0
+ 0x361 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x365 | 20 00       | local_get local_index:0
+ 0x367 | 41 98 01    | i32_const value:152
+ 0x36a | 6a          | i32_add
+ 0x36b | 42 0d       | i64_const value:13
+ 0x36d | 42 00       | i64_const value:0
+ 0x36f | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x375 | 20 00       | local_get local_index:0
+ 0x377 | 41 9f 02    | i32_const value:287
+ 0x37a | 6a          | i32_add
+ 0x37b | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x381 | 20 00       | local_get local_index:0
+ 0x383 | 29 03 98 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 152, memory: 0 }
+ 0x387 | 20 00       | local_get local_index:0
+ 0x389 | 28 02 a0 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 160, memory: 0 }
+ 0x38d | 20 01       | local_get local_index:1
+ 0x38f | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x395 | 42 01       | i64_const value:1
+ 0x397 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x39d | 20 01       | local_get local_index:1
+ 0x39f | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x3a5 | 41 00       | i32_const value:0
+ 0x3a7 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x3ae | 21 01       | local_set local_index:1
+ 0x3b0 | 20 00       | local_get local_index:0
+ 0x3b2 | 41 00       | i32_const value:0
+ 0x3b4 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x3b8 | 20 00       | local_get local_index:0
+ 0x3ba | 41 88 01    | i32_const value:136
+ 0x3bd | 6a          | i32_add
+ 0x3be | 42 15       | i64_const value:21
+ 0x3c0 | 42 00       | i64_const value:0
+ 0x3c2 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x3c8 | 20 00       | local_get local_index:0
+ 0x3ca | 41 9f 02    | i32_const value:287
+ 0x3cd | 6a          | i32_add
+ 0x3ce | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x3d4 | 20 00       | local_get local_index:0
+ 0x3d6 | 29 03 88 01 | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 136, memory: 0 }
+ 0x3da | 20 00       | local_get local_index:0
+ 0x3dc | 28 02 90 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 144, memory: 0 }
+ 0x3e0 | 20 01       | local_get local_index:1
+ 0x3e2 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x3e8 | 42 01       | i64_const value:1
+ 0x3ea | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x3f0 | 20 01       | local_get local_index:1
+ 0x3f2 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x3f8 | 41 00       | i32_const value:0
+ 0x3fa | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x401 | 21 01       | local_set local_index:1
+ 0x403 | 20 00       | local_get local_index:0
+ 0x405 | 41 00       | i32_const value:0
+ 0x407 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x40b | 20 00       | local_get local_index:0
+ 0x40d | 41 f8 00    | i32_const value:120
+ 0x410 | 6a          | i32_add
+ 0x411 | 42 22       | i64_const value:34
+ 0x413 | 42 00       | i64_const value:0
+ 0x415 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x41b | 20 00       | local_get local_index:0
+ 0x41d | 41 9f 02    | i32_const value:287
+ 0x420 | 6a          | i32_add
+ 0x421 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x427 | 20 00       | local_get local_index:0
+ 0x429 | 29 03 78    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 120, memory: 0 }
+ 0x42c | 20 00       | local_get local_index:0
+ 0x42e | 28 02 80 01 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 128, memory: 0 }
+ 0x432 | 20 01       | local_get local_index:1
+ 0x434 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x43a | 42 01       | i64_const value:1
+ 0x43c | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x442 | 20 01       | local_get local_index:1
+ 0x444 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x44a | 41 00       | i32_const value:0
+ 0x44c | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x453 | 21 01       | local_set local_index:1
+ 0x455 | 20 00       | local_get local_index:0
+ 0x457 | 41 00       | i32_const value:0
+ 0x459 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x45d | 20 00       | local_get local_index:0
+ 0x45f | 41 e8 00    | i32_const value:104
+ 0x462 | 6a          | i32_add
+ 0x463 | 42 37       | i64_const value:55
+ 0x465 | 42 00       | i64_const value:0
+ 0x467 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x46d | 20 00       | local_get local_index:0
+ 0x46f | 41 9f 02    | i32_const value:287
+ 0x472 | 6a          | i32_add
+ 0x473 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x479 | 20 00       | local_get local_index:0
+ 0x47b | 29 03 68    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 104, memory: 0 }
+ 0x47e | 20 00       | local_get local_index:0
+ 0x480 | 28 02 70    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 112, memory: 0 }
+ 0x483 | 20 01       | local_get local_index:1
+ 0x485 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x48b | 42 01       | i64_const value:1
+ 0x48d | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x493 | 20 01       | local_get local_index:1
+ 0x495 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x49b | 41 00       | i32_const value:0
+ 0x49d | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x4a4 | 21 01       | local_set local_index:1
+ 0x4a6 | 20 00       | local_get local_index:0
+ 0x4a8 | 41 00       | i32_const value:0
+ 0x4aa | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x4ae | 20 00       | local_get local_index:0
+ 0x4b0 | 41 d8 00    | i32_const value:88
+ 0x4b3 | 6a          | i32_add
+ 0x4b4 | 42 d9 00    | i64_const value:89
+ 0x4b7 | 42 00       | i64_const value:0
+ 0x4b9 | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x4bf | 20 00       | local_get local_index:0
+ 0x4c1 | 41 9f 02    | i32_const value:287
+ 0x4c4 | 6a          | i32_add
+ 0x4c5 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x4cb | 20 00       | local_get local_index:0
+ 0x4cd | 29 03 58    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 88, memory: 0 }
+ 0x4d0 | 20 00       | local_get local_index:0
+ 0x4d2 | 28 02 60    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 96, memory: 0 }
+ 0x4d5 | 20 01       | local_get local_index:1
+ 0x4d7 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x4dd | 42 01       | i64_const value:1
+ 0x4df | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x4e5 | 20 01       | local_get local_index:1
+ 0x4e7 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x4ed | 41 00       | i32_const value:0
+ 0x4ef | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x4f6 | 21 01       | local_set local_index:1
+ 0x4f8 | 20 00       | local_get local_index:0
+ 0x4fa | 41 00       | i32_const value:0
+ 0x4fc | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x500 | 20 00       | local_get local_index:0
+ 0x502 | 41 c8 00    | i32_const value:72
+ 0x505 | 6a          | i32_add
+ 0x506 | 42 90 01    | i64_const value:144
+ 0x509 | 42 00       | i64_const value:0
+ 0x50b | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x511 | 20 00       | local_get local_index:0
+ 0x513 | 41 9f 02    | i32_const value:287
+ 0x516 | 6a          | i32_add
+ 0x517 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x51d | 20 00       | local_get local_index:0
+ 0x51f | 29 03 48    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 72, memory: 0 }
+ 0x522 | 20 00       | local_get local_index:0
+ 0x524 | 28 02 50    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 80, memory: 0 }
+ 0x527 | 20 01       | local_get local_index:1
+ 0x529 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x52f | 42 01       | i64_const value:1
+ 0x531 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x537 | 20 01       | local_get local_index:1
+ 0x539 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x53f | 41 00       | i32_const value:0
+ 0x541 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x548 | 21 01       | local_set local_index:1
+ 0x54a | 20 00       | local_get local_index:0
+ 0x54c | 41 00       | i32_const value:0
+ 0x54e | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x552 | 20 00       | local_get local_index:0
+ 0x554 | 41 38       | i32_const value:56
+ 0x556 | 6a          | i32_add
+ 0x557 | 42 e9 01    | i64_const value:233
+ 0x55a | 42 00       | i64_const value:0
+ 0x55c | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x562 | 20 00       | local_get local_index:0
+ 0x564 | 41 9f 02    | i32_const value:287
+ 0x567 | 6a          | i32_add
+ 0x568 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x56e | 20 00       | local_get local_index:0
+ 0x570 | 29 03 38    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 56, memory: 0 }
+ 0x573 | 20 00       | local_get local_index:0
+ 0x575 | 28 02 40    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 64, memory: 0 }
+ 0x578 | 20 01       | local_get local_index:1
+ 0x57a | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x580 | 42 01       | i64_const value:1
+ 0x582 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x588 | 20 01       | local_get local_index:1
+ 0x58a | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x590 | 41 00       | i32_const value:0
+ 0x592 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x599 | 21 01       | local_set local_index:1
+ 0x59b | 20 00       | local_get local_index:0
+ 0x59d | 41 00       | i32_const value:0
+ 0x59f | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x5a3 | 20 00       | local_get local_index:0
+ 0x5a5 | 41 28       | i32_const value:40
+ 0x5a7 | 6a          | i32_add
+ 0x5a8 | 42 f9 02    | i64_const value:377
+ 0x5ab | 42 00       | i64_const value:0
+ 0x5ad | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x5b3 | 20 00       | local_get local_index:0
+ 0x5b5 | 41 9f 02    | i32_const value:287
+ 0x5b8 | 6a          | i32_add
+ 0x5b9 | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x5bf | 20 00       | local_get local_index:0
+ 0x5c1 | 29 03 28    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 40, memory: 0 }
+ 0x5c4 | 20 00       | local_get local_index:0
+ 0x5c6 | 28 02 30    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 48, memory: 0 }
+ 0x5c9 | 20 01       | local_get local_index:1
+ 0x5cb | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x5d1 | 42 01       | i64_const value:1
+ 0x5d3 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x5d9 | 20 01       | local_get local_index:1
+ 0x5db | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x5e1 | 41 00       | i32_const value:0
+ 0x5e3 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x5ea | 21 01       | local_set local_index:1
+ 0x5ec | 20 00       | local_get local_index:0
+ 0x5ee | 41 00       | i32_const value:0
+ 0x5f0 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x5f4 | 20 00       | local_get local_index:0
+ 0x5f6 | 41 18       | i32_const value:24
+ 0x5f8 | 6a          | i32_add
+ 0x5f9 | 42 e2 04    | i64_const value:610
+ 0x5fc | 42 00       | i64_const value:0
+ 0x5fe | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x604 | 20 00       | local_get local_index:0
+ 0x606 | 41 9f 02    | i32_const value:287
+ 0x609 | 6a          | i32_add
+ 0x60a | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x610 | 20 00       | local_get local_index:0
+ 0x612 | 29 03 18    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 24, memory: 0 }
+ 0x615 | 20 00       | local_get local_index:0
+ 0x617 | 28 02 20    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 32, memory: 0 }
+ 0x61a | 20 01       | local_get local_index:1
+ 0x61c | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x622 | 42 01       | i64_const value:1
+ 0x624 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x62a | 20 01       | local_get local_index:1
+ 0x62c | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x632 | 41 00       | i32_const value:0
+ 0x634 | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x63b | 21 01       | local_set local_index:1
+ 0x63d | 20 00       | local_get local_index:0
+ 0x63f | 41 00       | i32_const value:0
+ 0x641 | 3a 00 9f 02 | i32_store8 memarg:MemArg { align: 0, max_align: 0, offset: 287, memory: 0 }
+ 0x645 | 20 00       | local_get local_index:0
+ 0x647 | 41 08       | i32_const value:8
+ 0x649 | 6a          | i32_add
+ 0x64a | 42 db 07    | i64_const value:987
+ 0x64d | 42 00       | i64_const value:0
+ 0x64f | 41 84 80 80 | i32_const value:4
+       | 80 00      
+ 0x655 | 20 00       | local_get local_index:0
+ 0x657 | 41 9f 02    | i32_const value:287
+ 0x65a | 6a          | i32_add
+ 0x65b | 10 80 80 80 | call function_index:0
+       | 80 00      
+ 0x661 | 20 00       | local_get local_index:0
+ 0x663 | 29 03 08    | i64_load memarg:MemArg { align: 3, max_align: 3, offset: 8, memory: 0 }
+ 0x666 | 20 00       | local_get local_index:0
+ 0x668 | 28 02 10    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 16, memory: 0 }
+ 0x66b | 20 01       | local_get local_index:1
+ 0x66d | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x673 | 42 01       | i64_const value:1
+ 0x675 | 41 85 80 80 | i32_const value:5
+       | 80 00      
+ 0x67b | 20 01       | local_get local_index:1
+ 0x67d | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x683 | 42 01       | i64_const value:1
+ 0x685 | 41 87 80 80 | i32_const value:7
+       | 80 00      
+ 0x68b | 41 00       | i32_const value:0
+ 0x68d | 28 02 80 80 | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x694 | 10 81 80 80 | call function_index:1
+       | 80 00      
+ 0x69a | 20 00       | local_get local_index:0
+ 0x69c | 41 a0 02    | i32_const value:288
+ 0x69f | 6a          | i32_add
+ 0x6a0 | 24 80 80 80 | global_set global_index:0
+       | 80 00      
+ 0x6a6 | 42 00       | i64_const value:0
+ 0x6a8 | 0b          | end
+============== func 6 ====================
+ 0x6a9 | 44          | size of function
+ 0x6aa | 00          | 0 local blocks
+ 0x6ab | 02 40       | block blockty:Empty
+ 0x6ad | 20 00       | local_get local_index:0
+ 0x6af | 41 01       | i32_const value:1
+ 0x6b1 | 48          | i32_lt_s
+ 0x6b2 | 0d 00       | br_if relative_depth:0
+ 0x6b4 | 03 40       | loop blockty:Empty
+ 0x6b6 | 20 01       | local_get local_index:1
+ 0x6b8 | 28 02 00    | i32_load memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+ 0x6bb | 10 82 80 80 | call function_index:2
+       | 80 00      
+ 0x6c1 | 1a          | drop
+ 0x6c2 | 20 01       | local_get local_index:1
+ 0x6c4 | 41 04       | i32_const value:4
+ 0x6c6 | 6a          | i32_add
+ 0x6c7 | 21 01       | local_set local_index:1
+ 0x6c9 | 20 00       | local_get local_index:0
+ 0x6cb | 41 7f       | i32_const value:-1
+ 0x6cd | 6a          | i32_add
+ 0x6ce | 22 00       | local_tee local_index:0
+ 0x6d0 | 0d 00       | br_if relative_depth:0
+ 0x6d2 | 0b          | end
+ 0x6d3 | 0b          | end
+ 0x6d4 | 41 04       | i32_const value:4
+ 0x6d6 | 10 83 80 80 | call function_index:3
+       | 80 00      
+ 0x6dc | 41 00       | i32_const value:0
+ 0x6de | 10 84 80 80 | call function_index:4
+       | 80 00      
+ 0x6e4 | 36 02 80 80 | i32_store memarg:MemArg { align: 2, max_align: 2, offset: 0, memory: 0 }
+       | 80 80 00   
+ 0x6eb | 41 00       | i32_const value:0
+ 0x6ed | 0b          | end
+ 0x6ee | 0b 9e 80 80 | data section
+       | 80 00      
+ 0x6f4 | 04          | 4 count
+ 0x6f5 | 00          | data memory[0]
+ 0x6f6 | 41 00       | i32_const value:0
+ 0x6f8 | 0b          | end
+ 0x6f9 |-------------| ... 4 bytes of data
+ 0x6fe | 00          | data memory[0]
+ 0x6ff | 41 04       | i32_const value:4
+ 0x701 | 0b          | end
+ 0x702 |-------------| ... 1 bytes of data
+ 0x704 | 00          | data memory[0]
+ 0x705 | 41 05       | i32_const value:5
+ 0x707 | 0b          | end
+ 0x708 |-------------| ... 2 bytes of data
+ 0x70b | 00          | data memory[0]
+ 0x70c | 41 07       | i32_const value:7
+ 0x70e | 0b          | end
+ 0x70f |-------------| ... 2 bytes of data
+ 0x712 | 00 c0 81 80 | custom section
+       | 80 00      
+ 0x718 | 07 6c 69 6e | name: "linking"
+       | 6b 69 6e 67
+ 0x720 | 02          | linking version 2
+ 0x721 | 08 dd 80 80 | symbol table section
+       | 80 00      
+ 0x727 | 0c          | 12 count
+ 0x728 | 00 00 05 02 | Func { flags: SymbolFlags(0x0), index: 5, name: Some("fn") }
+       | 66 6e      
+ 0x72e | 02 10 00    | Global { flags: SymbolFlags(UNDEFINED), index: 0, name: None }
+ 0x731 | 01 02 0a 2e | Data { flags: SymbolFlags(BINDING_LOCAL), name: ".L._stdout", symbol: Some(DefinedDataSymbol { index: 0, offset: 0, size: 4 }) }
+       | 4c 2e 5f 73
+       | 74 64 6f 75
+       | 74 00 00 04
+ 0x741 | 01 02 08 2e | Data { flags: SymbolFlags(BINDING_LOCAL), name: ".L.str.9", symbol: Some(DefinedDataSymbol { index: 1, offset: 0, size: 1 }) }
+       | 4c 2e 73 74
+       | 72 2e 39 01
+       | 00 01      
+ 0x74f | 00 10 00    | Func { flags: SymbolFlags(UNDEFINED), index: 0, name: None }
+ 0x752 | 00 10 01    | Func { flags: SymbolFlags(UNDEFINED), index: 1, name: None }
+ 0x755 | 01 02 09 2e | Data { flags: SymbolFlags(BINDING_LOCAL), name: ".L.str.11", symbol: Some(DefinedDataSymbol { index: 2, offset: 0, size: 2 }) }
+       | 4c 2e 73 74
+       | 72 2e 31 31
+       | 02 00 02   
+ 0x764 | 01 02 09 2e | Data { flags: SymbolFlags(BINDING_LOCAL), name: ".L.str.13", symbol: Some(DefinedDataSymbol { index: 3, offset: 0, size: 2 }) }
+       | 4c 2e 73 74
+       | 72 2e 31 33
+       | 03 00 02   
+ 0x773 | 00 00 06 04 | Func { flags: SymbolFlags(0x0), index: 6, name: Some("main") }
+       | 6d 61 69 6e
+ 0x77b | 00 10 02    | Func { flags: SymbolFlags(UNDEFINED), index: 2, name: None }
+ 0x77e | 00 10 03    | Func { flags: SymbolFlags(UNDEFINED), index: 3, name: None }
+ 0x781 | 00 10 04    | Func { flags: SymbolFlags(UNDEFINED), index: 4, name: None }
+ 0x784 | 05 ce 80 80 | segment info section
+       | 80 00      
+ 0x78a | 04          | 4 count
+ 0x78b | 0f 2e 62 73 | Segment { name: ".bss..L._stdout", alignment: 2, flags: SegmentFlags(0x0) }
+       | 73 2e 2e 4c
+       | 2e 5f 73 74
+       | 64 6f 75 74
+       | 02 00      
+ 0x79d | 10 2e 72 6f | Segment { name: ".rodata..L.str.9", alignment: 0, flags: SegmentFlags(STRINGS) }
+       | 64 61 74 61
+       | 2e 2e 4c 2e
+       | 73 74 72 2e
+       | 39 00 01   
+ 0x7b0 | 11 2e 72 6f | Segment { name: ".rodata..L.str.11", alignment: 0, flags: SegmentFlags(STRINGS) }
+       | 64 61 74 61
+       | 2e 2e 4c 2e
+       | 73 74 72 2e
+       | 31 31 00 01
+ 0x7c4 | 11 2e 72 6f | Segment { name: ".rodata..L.str.13", alignment: 0, flags: SegmentFlags(STRINGS) }
+       | 64 61 74 61
+       | 2e 2e 4c 2e
+       | 73 74 72 2e
+       | 31 33 00 01
+ 0x7d8 | 00 fa 83 80 | custom section
+       | 80 00      
+ 0x7de | 0a 72 65 6c | name: "reloc.CODE"
+       | 6f 63 2e 43
+       | 4f 44 45   
+ 0x7e9 | 04          | section 4
+ 0x7ea | 70          | 112 count
+ 0x7eb | 07 07 01    | RelocationEntry { ty: GlobalIndexLeb, offset: 7, index: 1, addend: 0 }
+ 0x7ee | 07 13 01    | RelocationEntry { ty: GlobalIndexLeb, offset: 19, index: 1, addend: 0 }
+ 0x7f1 | 03 1c 02 00 | RelocationEntry { ty: MemoryAddrLeb, offset: 28, index: 2, addend: 0 }
+ 0x7f5 | 04 36 03 00 | RelocationEntry { ty: MemoryAddrSleb, offset: 54, index: 3, addend: 0 }
+ 0x7f9 | 00 42 04    | RelocationEntry { ty: FunctionIndexLeb, offset: 66, index: 4, addend: 0 }
+ 0x7fc | 00 56 05    | RelocationEntry { ty: FunctionIndexLeb, offset: 86, index: 5, addend: 0 }
+ 0x7ff | 04 5e 06 00 | RelocationEntry { ty: MemoryAddrSleb, offset: 94, index: 6, addend: 0 }
+ 0x803 | 00 66 05    | RelocationEntry { ty: FunctionIndexLeb, offset: 102, index: 5, addend: 0 }
+ 0x806 | 03 6f 02 00 | RelocationEntry { ty: MemoryAddrLeb, offset: 111, index: 2, addend: 0 }
+ 0x80a | 04 89 01 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 137, index: 3, addend: 0 }
+       | 00         
+ 0x80f | 00 95 01 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 149, index: 4, addend: 0 }
+ 0x813 | 00 a9 01 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 169, index: 5, addend: 0 }
+ 0x817 | 04 b1 01 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 177, index: 6, addend: 0 }
+       | 00         
+ 0x81c | 00 b9 01 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 185, index: 5, addend: 0 }
+ 0x820 | 03 c2 01 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 194, index: 2, addend: 0 }
+       | 00         
+ 0x825 | 04 dc 01 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 220, index: 3, addend: 0 }
+       | 00         
+ 0x82a | 00 e8 01 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 232, index: 4, addend: 0 }
+ 0x82e | 00 fc 01 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 252, index: 5, addend: 0 }
+ 0x832 | 04 84 02 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 260, index: 6, addend: 0 }
+       | 00         
+ 0x837 | 00 8c 02 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 268, index: 5, addend: 0 }
+ 0x83b | 03 95 02 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 277, index: 2, addend: 0 }
+       | 00         
+ 0x840 | 04 af 02 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 303, index: 3, addend: 0 }
+       | 00         
+ 0x845 | 00 bb 02 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 315, index: 4, addend: 0 }
+ 0x849 | 00 cf 02 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 335, index: 5, addend: 0 }
+ 0x84d | 04 d7 02 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 343, index: 6, addend: 0 }
+       | 00         
+ 0x852 | 00 df 02 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 351, index: 5, addend: 0 }
+ 0x856 | 03 e8 02 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 360, index: 2, addend: 0 }
+       | 00         
+ 0x85b | 04 82 03 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 386, index: 3, addend: 0 }
+       | 00         
+ 0x860 | 00 8e 03 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 398, index: 4, addend: 0 }
+ 0x864 | 00 a2 03 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 418, index: 5, addend: 0 }
+ 0x868 | 04 aa 03 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 426, index: 6, addend: 0 }
+       | 00         
+ 0x86d | 00 b2 03 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 434, index: 5, addend: 0 }
+ 0x871 | 03 bb 03 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 443, index: 2, addend: 0 }
+       | 00         
+ 0x876 | 04 d5 03 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 469, index: 3, addend: 0 }
+       | 00         
+ 0x87b | 00 e1 03 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 481, index: 4, addend: 0 }
+ 0x87f | 00 f5 03 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 501, index: 5, addend: 0 }
+ 0x883 | 04 fd 03 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 509, index: 6, addend: 0 }
+       | 00         
+ 0x888 | 00 85 04 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 517, index: 5, addend: 0 }
+ 0x88c | 03 8e 04 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 526, index: 2, addend: 0 }
+       | 00         
+ 0x891 | 04 a8 04 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 552, index: 3, addend: 0 }
+       | 00         
+ 0x896 | 00 b4 04 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 564, index: 4, addend: 0 }
+ 0x89a | 00 c8 04 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 584, index: 5, addend: 0 }
+ 0x89e | 04 d0 04 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 592, index: 6, addend: 0 }
+       | 00         
+ 0x8a3 | 00 d8 04 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 600, index: 5, addend: 0 }
+ 0x8a7 | 03 e1 04 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 609, index: 2, addend: 0 }
+       | 00         
+ 0x8ac | 04 fb 04 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 635, index: 3, addend: 0 }
+       | 00         
+ 0x8b1 | 00 87 05 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 647, index: 4, addend: 0 }
+ 0x8b5 | 00 9b 05 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 667, index: 5, addend: 0 }
+ 0x8b9 | 04 a3 05 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 675, index: 6, addend: 0 }
+       | 00         
+ 0x8be | 00 ab 05 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 683, index: 5, addend: 0 }
+ 0x8c2 | 03 b4 05 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 692, index: 2, addend: 0 }
+       | 00         
+ 0x8c7 | 04 ce 05 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 718, index: 3, addend: 0 }
+       | 00         
+ 0x8cc | 00 da 05 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 730, index: 4, addend: 0 }
+ 0x8d0 | 00 ee 05 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 750, index: 5, addend: 0 }
+ 0x8d4 | 04 f6 05 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 758, index: 6, addend: 0 }
+       | 00         
+ 0x8d9 | 00 fe 05 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 766, index: 5, addend: 0 }
+ 0x8dd | 03 87 06 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 775, index: 2, addend: 0 }
+       | 00         
+ 0x8e2 | 04 a1 06 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 801, index: 3, addend: 0 }
+       | 00         
+ 0x8e7 | 00 ad 06 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 813, index: 4, addend: 0 }
+ 0x8eb | 00 c0 06 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 832, index: 5, addend: 0 }
+ 0x8ef | 04 c8 06 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 840, index: 6, addend: 0 }
+       | 00         
+ 0x8f4 | 00 d0 06 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 848, index: 5, addend: 0 }
+ 0x8f8 | 03 d9 06 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 857, index: 2, addend: 0 }
+       | 00         
+ 0x8fd | 04 f3 06 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 883, index: 3, addend: 0 }
+       | 00         
+ 0x902 | 00 ff 06 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 895, index: 4, addend: 0 }
+ 0x906 | 00 91 07 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 913, index: 5, addend: 0 }
+ 0x90a | 04 99 07 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 921, index: 6, addend: 0 }
+       | 00         
+ 0x90f | 00 a1 07 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 929, index: 5, addend: 0 }
+ 0x913 | 03 aa 07 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 938, index: 2, addend: 0 }
+       | 00         
+ 0x918 | 04 c5 07 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 965, index: 3, addend: 0 }
+       | 00         
+ 0x91d | 00 d1 07 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 977, index: 4, addend: 0 }
+ 0x921 | 00 e3 07 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 995, index: 5, addend: 0 }
+ 0x925 | 04 eb 07 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1003, index: 6, addend: 0 }
+       | 00         
+ 0x92a | 00 f3 07 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1011, index: 5, addend: 0 }
+ 0x92e | 03 fc 07 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1020, index: 2, addend: 0 }
+       | 00         
+ 0x933 | 04 97 08 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 1047, index: 3, addend: 0 }
+       | 00         
+ 0x938 | 00 a3 08 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 1059, index: 4, addend: 0 }
+ 0x93c | 00 b5 08 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1077, index: 5, addend: 0 }
+ 0x940 | 04 bd 08 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1085, index: 6, addend: 0 }
+       | 00         
+ 0x945 | 00 c5 08 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1093, index: 5, addend: 0 }
+ 0x949 | 03 ce 08 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1102, index: 2, addend: 0 }
+       | 00         
+ 0x94e | 04 e8 08 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 1128, index: 3, addend: 0 }
+       | 00         
+ 0x953 | 00 f4 08 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 1140, index: 4, addend: 0 }
+ 0x957 | 00 86 09 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1158, index: 5, addend: 0 }
+ 0x95b | 04 8e 09 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1166, index: 6, addend: 0 }
+       | 00         
+ 0x960 | 00 96 09 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1174, index: 5, addend: 0 }
+ 0x964 | 03 9f 09 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1183, index: 2, addend: 0 }
+       | 00         
+ 0x969 | 04 b9 09 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 1209, index: 3, addend: 0 }
+       | 00         
+ 0x96e | 00 c5 09 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 1221, index: 4, addend: 0 }
+ 0x972 | 00 d7 09 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1239, index: 5, addend: 0 }
+ 0x976 | 04 df 09 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1247, index: 6, addend: 0 }
+       | 00         
+ 0x97b | 00 e7 09 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1255, index: 5, addend: 0 }
+ 0x97f | 03 f0 09 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1264, index: 2, addend: 0 }
+       | 00         
+ 0x984 | 04 8a 0a 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 1290, index: 3, addend: 0 }
+       | 00         
+ 0x989 | 00 96 0a 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 1302, index: 4, addend: 0 }
+ 0x98d | 00 a8 0a 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1320, index: 5, addend: 0 }
+ 0x991 | 04 b0 0a 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1328, index: 6, addend: 0 }
+       | 00         
+ 0x996 | 00 b8 0a 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1336, index: 5, addend: 0 }
+ 0x99a | 03 c1 0a 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1345, index: 2, addend: 0 }
+       | 00         
+ 0x99f | 04 db 0a 03 | RelocationEntry { ty: MemoryAddrSleb, offset: 1371, index: 3, addend: 0 }
+       | 00         
+ 0x9a4 | 00 e7 0a 04 | RelocationEntry { ty: FunctionIndexLeb, offset: 1383, index: 4, addend: 0 }
+ 0x9a8 | 00 f9 0a 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1401, index: 5, addend: 0 }
+ 0x9ac | 04 81 0b 06 | RelocationEntry { ty: MemoryAddrSleb, offset: 1409, index: 6, addend: 0 }
+       | 00         
+ 0x9b1 | 00 89 0b 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1417, index: 5, addend: 0 }
+ 0x9b5 | 04 91 0b 07 | RelocationEntry { ty: MemoryAddrSleb, offset: 1425, index: 7, addend: 0 }
+       | 00         
+ 0x9ba | 03 9a 0b 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1434, index: 2, addend: 0 }
+       | 00         
+ 0x9bf | 00 a0 0b 05 | RelocationEntry { ty: FunctionIndexLeb, offset: 1440, index: 5, addend: 0 }
+ 0x9c3 | 07 ac 0b 01 | RelocationEntry { ty: GlobalIndexLeb, offset: 1452, index: 1, addend: 0 }
+ 0x9c7 | 00 c7 0b 09 | RelocationEntry { ty: FunctionIndexLeb, offset: 1479, index: 9, addend: 0 }
+ 0x9cb | 00 e2 0b 0a | RelocationEntry { ty: FunctionIndexLeb, offset: 1506, index: 10, addend: 0 }
+ 0x9cf | 00 ea 0b 0b | RelocationEntry { ty: FunctionIndexLeb, offset: 1514, index: 11, addend: 0 }
+ 0x9d3 | 03 f1 0b 02 | RelocationEntry { ty: MemoryAddrLeb, offset: 1521, index: 2, addend: 0 }
+       | 00         
+ 0x9d8 | 00 ac 80 80 | custom section
+       | 80 00      
+ 0x9de | 0f 74 61 72 | name: "target_features"
+       | 67 65 74 5f
+       | 66 65 61 74
+       | 75 72 65 73
+ 0x9ee |-------------| ... 28 bytes of data

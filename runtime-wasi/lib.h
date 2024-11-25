@@ -1,4 +1,4 @@
-// Copyright (C) 2022-2024 Exaloop Inc. <https://exaloop.io>
+// Copyright (C) 2022 Exaloop Inc. <https://exaloop.io>
 
 #pragma once
 
@@ -16,8 +16,6 @@
 #define SEQ_FLAG_DEBUG (1 << 0)          // compiled/running in debug mode
 #define SEQ_FLAG_CAPTURE_OUTPUT (1 << 1) // capture writes to stdout/stderr
 #define SEQ_FLAG_STANDALONE (1 << 2)     // compiled as a standalone object/binary
-
-#define SEQ_EXCEPTION_CLASS 0x6f626a0073657100
 
 #define SEQ_FUNC extern "C"
 
@@ -56,11 +54,11 @@ SEQ_FUNC void seq_sleep(double secs);
 SEQ_FUNC char **seq_env();
 SEQ_FUNC void seq_assert_failed(seq_str_t file, seq_int_t line);
 
-SEQ_FUNC void *seq_alloc(size_t n);
-SEQ_FUNC void *seq_alloc_atomic(size_t n);
-SEQ_FUNC void *seq_alloc_uncollectable(size_t n);
-SEQ_FUNC void *seq_alloc_atomic_uncollectable(size_t n);
-SEQ_FUNC void *seq_realloc(void *p, size_t newsize, size_t oldsize);
+SEQ_FUNC void *seq_alloc(seq_int_t n);
+SEQ_FUNC void *seq_alloc_atomic(seq_int_t n);
+SEQ_FUNC void *seq_calloc(size_t m, size_t n);
+SEQ_FUNC void *seq_calloc_atomic(size_t m, size_t n);
+SEQ_FUNC void *seq_realloc(void *p, seq_int_t newsize, seq_int_t oldsize);
 SEQ_FUNC void seq_free(void *p);
 SEQ_FUNC void seq_register_finalizer(void *p, void (*f)(void *obj, void *data));
 
@@ -76,8 +74,9 @@ SEQ_FUNC _Unwind_Reason_Code seq_personality(int version, _Unwind_Action actions
                                              _Unwind_Exception *exceptionObject,
                                              _Unwind_Context *context);
 SEQ_FUNC int64_t seq_exc_offset();
+SEQ_FUNC uint64_t seq_exc_class();
 
-SEQ_FUNC seq_str_t seq_str_int(seq_int_t n, seq_str_t format, bool *error);
+SEQ_FUNC seq_str_t seq_str_int(seq_int_t n, seq_int_t len, char *format, bool *error);
 SEQ_FUNC seq_str_t seq_str_uint(seq_int_t n, seq_str_t format, bool *error);
 SEQ_FUNC seq_str_t seq_str_float(double f, seq_str_t format, bool *error);
 SEQ_FUNC seq_str_t seq_str_ptr(void *p, seq_str_t format, bool *error);
@@ -88,7 +87,7 @@ SEQ_FUNC void *seq_stdout();
 SEQ_FUNC void *seq_stderr();
 
 SEQ_FUNC void seq_print(seq_str_t str);
-SEQ_FUNC void seq_print_full(seq_str_t str, FILE *fo);
+SEQ_FUNC void seq_print_full(seq_int_t len, char *str, FILE *fo);
 
 SEQ_FUNC void *seq_lock_new();
 SEQ_FUNC void *seq_lock_new();
@@ -131,6 +130,5 @@ std::string makeBacktraceFrameString(uintptr_t pc, const std::string &func = "",
 std::string getCapturedOutput();
 
 void setJITErrorCallback(std::function<void(const JITError &)> callback);
-
 } // namespace runtime
 } // namespace codon

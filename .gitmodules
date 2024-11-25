@@ -1,0 +1,3 @@
+[submodule "runtime-wasi/fmt"]
+	path = runtime-wasi/fmt
+	url = https://github.com/fmtlib/fmt.git

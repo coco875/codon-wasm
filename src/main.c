@@ -2,6 +2,6 @@
 
 int64_t fn();
 
-void start() {
+void main() {
     fn();
 }

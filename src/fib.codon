@@ -5,6 +5,8 @@ def fib(n):
         a, b = b, a+b
     print()
 
+fib(1000)
+
 @export
-def fn() -> int:
+def main() -> int:
     fib(1000)
