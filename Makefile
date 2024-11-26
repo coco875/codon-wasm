@@ -15,7 +15,7 @@ CPP_FILE += $(wildcard lib/*.cpp)
 CPP_FILE += runtime-wasi/exc.cpp runtime-wasi/lib.cpp
 CC_FILE := runtime-wasi/fmt/src/format.cc
 
-PYTHON_FILE := $(call rwildcard,src,*.codon)
+PYTHON_FILE := src/mainpy.codon
 
 ALL_O := $(foreach file,$(C_FILE),$(file:%.c=$(BUILD_DIR)/%.o)) 
 ALL_O += $(foreach file,$(CPP_FILE),$(file:%.cpp=$(BUILD_DIR)/%.o))
@@ -53,8 +53,8 @@ $(BUILD_DIR)/%.o: %.cpp
 $(BUILD_DIR)/%.o: %.cc
 	$(CPP) -c -std=c++20 $(CC_FLAGS) -o $@ $<
 
-$(BUILD_DIR)/%.o: %.codon
-	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $@ $<
+$(BUILD_DIR)/src/mainpy.o: $(call rwildcard,src,*.codon)
+	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $@ src/mainpy.codon
 
 $(MOD_NAME).wasm: $(ALL_O)
 	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s LINKABLE=1 -s EXPORT_ALL=1 -s STANDALONE_WASM=1 -s PURE_WASI=1

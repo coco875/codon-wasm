@@ -3,25 +3,15 @@ from time import time
 def fib(n):
     return n if n < 2 else fib(n - 1) + fib(n - 2)
 
-class Foo:
-    x: list[int]
-
-    def __init__(self, l):  # constructor
-        self.x = l
-
-    def __getitem__(self, i):
-        if i > len(self.x):
-            print("problem !!!")
-            raise IndexError("out of range")
-        return self.x[i]
-
 @export
 def fn() -> None:
     t0 = time()
     ans = fib(39)
     try:
         for i in range(10):
-            a = Foo([0,1]).__getitem__(i)
+            # if i >= 2:
+            #     continue
+            a = [0,1][i]
             print("a:", a)
             if a != 0:
                 print("1/a:", 1/a)

@@ -258,7 +258,7 @@ SEQ_FUNC void seq_terminate(void *exc) {
       std::cerr << e.getType();
       std::cerr << e.getOutput();
       auto *bt = &base->bt;
-      abort();
+      throw e;
     }
     //   throw e;
   }
