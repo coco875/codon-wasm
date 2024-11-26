@@ -15,21 +15,18 @@ class Foo:
             raise IndexError("out of range")
         return self.x[i]
 
-    def get(self, i):
-        if i > len(self.x):
-            print("problem !!!")
-            raise IndexError("out of range")
-        return self.x[i]
-
 @export
 def fn() -> None:
     t0 = time()
     ans = fib(39)
-    for i in range(10):
-        a = Foo([0,1]).__getitem__(i)
-        print("a:", a)
-        if a != 0:
-            print("1/a:", 1/a)
+    try:
+        for i in range(10):
+            a = Foo([0,1]).__getitem__(i)
+            print("a:", a)
+            if a != 0:
+                print("1/a:", 1/a)
+    except:
+        print("error")
     t1 = time()
     print(f'Computed fib(40) = {ans} in {t1 - t0} seconds.')
 

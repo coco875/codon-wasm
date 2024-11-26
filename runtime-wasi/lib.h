@@ -17,6 +17,8 @@
 #define SEQ_FLAG_CAPTURE_OUTPUT (1 << 1) // capture writes to stdout/stderr
 #define SEQ_FLAG_STANDALONE (1 << 2)     // compiled as a standalone object/binary
 
+#define SEQ_EXCEPTION_CLASS 0x6f626a0073657100
+
 #define SEQ_FUNC extern "C"
 
 typedef int64_t seq_int_t;

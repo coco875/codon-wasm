@@ -9,7 +9,6 @@ DUMMY != mkdir -p $(foreach dir,$(ALL_DIR_CODE),$(BUILD_DIR)/$(dir))
 # recursive wildcard
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 C_FILE := $(call rwildcard,src,*.c)
-C_FILE += $(wildcard lib/*.c)
 
 CPP_FILE := $(call rwildcard,src,*.cpp)
 CPP_FILE += $(wildcard lib/*.cpp)
@@ -58,7 +57,7 @@ $(BUILD_DIR)/%.o: %.codon
 	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $@ $<
 
 $(MOD_NAME).wasm: $(ALL_O)
-	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s LINKABLE=1 -s EXPORT_ALL=1 -s PURE_WASI=1
+	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s LINKABLE=1 -s EXPORT_ALL=1 -s STANDALONE_WASM=1 -s PURE_WASI=1
 
 clean:
 	rm $(MOD_NAME).wasm build -r
