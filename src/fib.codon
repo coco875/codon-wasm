@@ -4,12 +4,21 @@ def fib(n):
     return n if n < 2 else fib(n - 1) + fib(n - 2)
 
 class Foo:
-    x: list
+    x: list[int]
 
     def __init__(self, l):  # constructor
         self.x = l
 
     def __getitem__(self, i):
+        if i > len(self.x):
+            print("problem !!!")
+            raise IndexError("out of range")
+        return self.x[i]
+
+    def get(self, i):
+        if i > len(self.x):
+            print("problem !!!")
+            raise IndexError("out of range")
         return self.x[i]
 
 @export
@@ -17,10 +26,10 @@ def fn() -> None:
     t0 = time()
     ans = fib(39)
     for i in range(10):
-        a = [0,1].__getitem__(i)
-        print(a)
+        a = Foo([0,1]).__getitem__(i)
+        print("a:", a)
         if a != 0:
-            print(1/a)
+            print("1/a:", 1/a)
     t1 = time()
     print(f'Computed fib(40) = {ans} in {t1 - t0} seconds.')
 

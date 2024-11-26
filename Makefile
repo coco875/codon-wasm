@@ -36,7 +36,7 @@ else
 CC_FLAGS += -O3
 endif
 PYTHON_COMPILER := codon build
-CODON_FLAGS := --march=wasm32 --obj
+CODON_FLAGS := --march=wasm32 --obj -numerics=py
 ifeq ($(DEBUG), 1)
 CODON_FLAGS += --debug
 else
