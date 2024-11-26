@@ -25,6 +25,10 @@
 #include "lib.h"
 // #include <gc.h>
 
+#define FASTFLOAT_ALLOWS_LEADING_PLUS
+#define FASTFLOAT_SKIP_WHITE_SPACE
+#include "fast_float/fast_float.h"
+
 /*
  * General
  */
@@ -149,7 +153,7 @@ SEQ_FUNC char **seq_env() { return environ; }
  */
 #define USE_STANDARD_MALLOC 1
 
-SEQ_FUNC void *seq_alloc(seq_int_t n) {
+SEQ_FUNC void *seq_alloc(int64_t n) {
 #if USE_STANDARD_MALLOC
   return malloc(n);
 #else
@@ -157,7 +161,7 @@ SEQ_FUNC void *seq_alloc(seq_int_t n) {
 #endif
 }
 
-SEQ_FUNC void *seq_alloc_atomic(seq_int_t n) {
+SEQ_FUNC void *seq_alloc_atomic(int64_t n) {
 #if USE_STANDARD_MALLOC
   return malloc(n);
 #else
@@ -165,29 +169,23 @@ SEQ_FUNC void *seq_alloc_atomic(seq_int_t n) {
 #endif
 }
 
-SEQ_FUNC void *seq_calloc(size_t m, size_t n) {
+SEQ_FUNC void *seq_alloc_uncollectable(size_t n) {
 #if USE_STANDARD_MALLOC
-  return calloc(m, n);
+  return malloc(n);
 #else
-  size_t s = m * n;
-  void *p = GC_MALLOC(s);
-  memset(p, 0, s);
-  return p;
+  return GC_MALLOC_UNCOLLECTABLE(n);
 #endif
 }
 
-SEQ_FUNC void *seq_calloc_atomic(size_t m, size_t n) {
+SEQ_FUNC void *seq_alloc_atomic_uncollectable(int64_t n) {
 #if USE_STANDARD_MALLOC
-  return calloc(m, n);
+  return malloc(n);
 #else
-  size_t s = m * n;
-  void *p = GC_MALLOC_ATOMIC(s);
-  memset(p, 0, s);
-  return p;
+  return GC_MALLOC_ATOMIC_UNCOLLECTABLE(n);
 #endif
 }
 
-SEQ_FUNC void *seq_realloc(void *p, seq_int_t newsize, seq_int_t oldsize) {
+SEQ_FUNC void *seq_realloc(void *p, int64_t newsize, int64_t oldsize) {
 #if USE_STANDARD_MALLOC
   return realloc(p, newsize);
 #else
@@ -275,8 +273,8 @@ SEQ_FUNC seq_str_t seq_str_uint(seq_int_t n, seq_str_t format, bool *error) {
   return fmt_conv<uint64_t>(n, format, error);
 }
 
-SEQ_FUNC seq_str_t seq_str_float(double f, seq_str_t format, bool *error) {
-  return fmt_conv<double>(f, format, error);
+SEQ_FUNC seq_str_t seq_str_float(double f, seq_int_t len, char *str, bool *error) {
+  return fmt_conv<double>(f, {len, str}, error);
 }
 
 SEQ_FUNC seq_str_t seq_str_ptr(void *p, seq_str_t format, bool *error) {
@@ -286,6 +284,20 @@ SEQ_FUNC seq_str_t seq_str_ptr(void *p, seq_str_t format, bool *error) {
 SEQ_FUNC seq_str_t seq_str_str(seq_str_t s, seq_str_t format, bool *error) {
   std::string t(s.str, s.len);
   return fmt_conv(t, format, error);
+}
+
+SEQ_FUNC seq_int_t seq_int_from_str(seq_str_t s, const char **e, int base) {
+  seq_int_t result;
+  auto r = fast_float::from_chars(s.str, s.str + s.len, result, base);
+  *e = (r.ec == std::errc()) ? r.ptr : s.str;
+  return result;
+}
+
+SEQ_FUNC double seq_float_from_str(seq_str_t s, const char **e) {
+  double result;
+  auto r = fast_float::from_chars(s.str, s.str + s.len, result);
+  *e = (r.ec == std::errc() || r.ec == std::errc::result_out_of_range) ? r.ptr : s.str;
+  return result;
 }
 
 /*

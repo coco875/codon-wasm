@@ -1,7 +1,7 @@
 #include <stdint.h>
 
-int64_t fn();
+void fn();
 
-void main() {
+int main(int argc, char* argv[]) {
     fn();
 }

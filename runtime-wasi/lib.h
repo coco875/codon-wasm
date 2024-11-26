@@ -54,11 +54,11 @@ SEQ_FUNC void seq_sleep(double secs);
 SEQ_FUNC char **seq_env();
 SEQ_FUNC void seq_assert_failed(seq_str_t file, seq_int_t line);
 
-SEQ_FUNC void *seq_alloc(seq_int_t n);
-SEQ_FUNC void *seq_alloc_atomic(seq_int_t n);
-SEQ_FUNC void *seq_calloc(size_t m, size_t n);
-SEQ_FUNC void *seq_calloc_atomic(size_t m, size_t n);
-SEQ_FUNC void *seq_realloc(void *p, seq_int_t newsize, seq_int_t oldsize);
+SEQ_FUNC void *seq_alloc(int64_t n);
+SEQ_FUNC void *seq_alloc_atomic(int64_t n);
+SEQ_FUNC void *seq_alloc_uncollectable(size_t n);
+SEQ_FUNC void *seq_alloc_atomic_uncollectable(int64_t n);
+SEQ_FUNC void *seq_realloc(void *p, int64_t newsize, int64_t oldsize);
 SEQ_FUNC void seq_free(void *p);
 SEQ_FUNC void seq_register_finalizer(void *p, void (*f)(void *obj, void *data));
 
@@ -78,7 +78,7 @@ SEQ_FUNC uint64_t seq_exc_class();
 
 SEQ_FUNC seq_str_t seq_str_int(seq_int_t n, seq_int_t len, char *format, bool *error);
 SEQ_FUNC seq_str_t seq_str_uint(seq_int_t n, seq_str_t format, bool *error);
-SEQ_FUNC seq_str_t seq_str_float(double f, seq_str_t format, bool *error);
+SEQ_FUNC seq_str_t seq_str_float(double f, seq_int_t len, char *str, bool *error);
 SEQ_FUNC seq_str_t seq_str_ptr(void *p, seq_str_t format, bool *error);
 SEQ_FUNC seq_str_t seq_str_str(seq_str_t s, seq_str_t format, bool *error);
 

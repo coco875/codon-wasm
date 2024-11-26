@@ -1,6 +1,8 @@
 BUILD_DIR := build
 
-ALL_DIR_CODE := lib lib/bdwgc lib/ src lib/fmt/src lib/libatomic_ops/src
+DEBUG = 1
+
+ALL_DIR_CODE := lib lib/ src runtime-wasi/fmt/src runtime-wasi stdlib
 
 DUMMY != mkdir -p $(foreach dir,$(ALL_DIR_CODE),$(BUILD_DIR)/$(dir))
 
@@ -8,13 +10,11 @@ DUMMY != mkdir -p $(foreach dir,$(ALL_DIR_CODE),$(BUILD_DIR)/$(dir))
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 C_FILE := $(call rwildcard,src,*.c)
 C_FILE += $(wildcard lib/*.c)
-# BDWGC_FILE := $(wildcard lib/bdwgc/*.c)
-# C_FILE += $(filter-out %darwin%, $(BDWGC_FILE))
-C_FILE += $(wildcard lib/libatomic_ops/src/*.c)
 
 CPP_FILE := $(call rwildcard,src,*.cpp)
 CPP_FILE += $(wildcard lib/*.cpp)
-CC_FILE := $(wildcard lib/fmt/src/*.cc)
+CPP_FILE += runtime-wasi/exc.cpp runtime-wasi/lib.cpp
+CC_FILE := runtime-wasi/fmt/src/format.cc
 
 PYTHON_FILE := $(call rwildcard,src,*.codon)
 
@@ -25,12 +25,23 @@ ALL_O += $(foreach file,$(PYTHON_FILE),$(file:%.codon=$(BUILD_DIR)/%.o))
 
 MOD_NAME := test
 
-INCLUDE_DIRS=lib include lib/fmt/include lib/fast_float/include lib/bdwgc/include lib/libatomic_ops/src
+INCLUDE_DIRS=lib include runtime-wasi/fmt/include runtime-wasi/fast_float/include
 
 CC := emcc
 CPP := em++
-CC_FLAGS := $(foreach i,$(INCLUDE_DIRS),-I$(i)) -DGC_PTHREADS -DTHREADS -DUSE_PTHREAD_LOCKS
+CC_FLAGS := $(foreach i,$(INCLUDE_DIRS),-I$(i))
+ifeq ($(DEBUG), 1)
+CC_FLAGS += -g
+else
+CC_FLAGS += -O3
+endif
 PYTHON_COMPILER := codon build
+CODON_FLAGS := --march=wasm32 --obj
+ifeq ($(DEBUG), 1)
+CODON_FLAGS += --debug
+else
+CODON_FLAGS += --release
+endif
 
 $(MOD_NAME): $(MOD_NAME).wasm
 
@@ -44,10 +55,10 @@ $(BUILD_DIR)/%.o: %.cc
 	$(CPP) -c -std=c++20 $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: %.codon
-	$(PYTHON_COMPILER) --release --march=wasm32 --obj -o $@ $<
+	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $@ $<
 
 $(MOD_NAME).wasm: $(ALL_O)
-	$(CC) $^ -o $(MOD_NAME).wasm -O3 -s LINKABLE=1 -s EXPORT_ALL=1 -s PURE_WASI=1
+	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s LINKABLE=1 -s EXPORT_ALL=1 -s PURE_WASI=1
 
 clean:
 	rm $(MOD_NAME).wasm build -r

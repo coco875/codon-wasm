@@ -1,12 +1,27 @@
-def fib(n):
-    a, b = 0, 1
-    while a < n:
-        print(a, end=' ')
-        a, b = b, a+b
-    print()
+from time import time
 
-fib(1000)
+def fib(n):
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+class Foo:
+    x: list
+
+    def __init__(self, l):  # constructor
+        self.x = l
+
+    def __getitem__(self, i):
+        return self.x[i]
 
 @export
-def main() -> int:
-    fib(1000)
+def fn() -> None:
+    t0 = time()
+    ans = fib(39)
+    for i in range(10):
+        a = [0,1].__getitem__(i)
+        print(a)
+        if a != 0:
+            print(1/a)
+    t1 = time()
+    print(f'Computed fib(40) = {ans} in {t1 - t0} seconds.')
+
+fn()
