@@ -154,3 +154,5 @@ cython_debug/
 *.wasm
 *.ll
 build-cmake
+
+*.dump

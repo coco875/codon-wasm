@@ -314,7 +314,7 @@ SEQ_FUNC seq_str_t seq_check_errno() {
   return {0, nullptr};
 }
 
-SEQ_FUNC void seq_print(seq_str_t str) { seq_print_full(str.len, str.str, stdout); }
+SEQ_FUNC void seq_print(seq_int_t len, char* str) { seq_print_full(len, str, stdout); }
 
 static std::ostringstream capture;
 // static std::mutex captureLock;

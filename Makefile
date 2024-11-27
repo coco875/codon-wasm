@@ -2,7 +2,7 @@ BUILD_DIR := build
 
 DEBUG = 1
 
-ALL_DIR_CODE := lib lib/ src runtime-wasi/fmt/src runtime-wasi stdlib
+ALL_DIR_CODE := src runtime-wasi/fmt/src runtime-wasi
 
 DUMMY != mkdir -p $(foreach dir,$(ALL_DIR_CODE),$(BUILD_DIR)/$(dir))
 
@@ -35,7 +35,7 @@ else
 CC_FLAGS += -O3
 endif
 PYTHON_COMPILER := codon build
-CODON_FLAGS := --march=wasm32 --obj -numerics=py
+CODON_FLAGS := --llvm -numerics=py
 ifeq ($(DEBUG), 1)
 CODON_FLAGS += --debug
 else
@@ -54,10 +54,19 @@ $(BUILD_DIR)/%.o: %.cc
 	$(CPP) -c -std=c++20 $(CC_FLAGS) -o $@ $<
 
 $(BUILD_DIR)/src/mainpy.o: $(call rwildcard,src,*.codon)
-	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $@ src/mainpy.codon
+	$(PYTHON_COMPILER) $(CODON_FLAGS) -o $(BUILD_DIR)/src/mainpy.ll src/mainpy.codon
+	cat $(BUILD_DIR)/src/mainpy.ll | sed -e "s/{} @fflush(ptr/i32 @fflush(ptr/g" > $(BUILD_DIR)/src/mainpy_fflush.ll
+	cat $(BUILD_DIR)/src/mainpy_fflush.ll | \
+		sed -e "s/i64 @strlen(ptr/i32 @strlen(ptr/g" | \
+		sed -e "s/insertvalue { i64, ptr } undef, i64 %8, 0/insertvalue { i32, ptr } undef, i32 %8, 0/g" | \
+		sed -e "s/insertvalue { i64, ptr } %9, ptr %7, 1/insertvalue { i32, ptr } %9, ptr %7, 1/g" | \
+		sed -e "s/store { i64, ptr } %10, ptr %11, align 8/store { i32, ptr } %10, ptr %11, align 8/g" \
+		> $(BUILD_DIR)/src/mainpy_strlen.ll
+	cat $(BUILD_DIR)/src/mainpy_strlen.ll | sed -e "s/define i32 @main(i32 %argc/define i32 @__main_argc_argv(i32 %argc/g" > $(BUILD_DIR)/src/mainpy_mod.ll
+	llc -march=wasm32 -filetype=obj $(BUILD_DIR)/src/mainpy_mod.ll -o $(BUILD_DIR)/src/mainpy.o
 
 $(MOD_NAME).wasm: $(ALL_O)
-	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s LINKABLE=1 -s EXPORT_ALL=1 -s STANDALONE_WASM=1 -s PURE_WASI=1
+	$(CC) $^ -o $(MOD_NAME).wasm $(CC_FLAGS) -s EXPORT_ALL=1 -s STANDALONE_WASM=1 -s PURE_WASI=1
 
 clean:
 	rm $(MOD_NAME).wasm build -r

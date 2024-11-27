@@ -1,23 +1,23 @@
 from time import time
+from C import seq_print(str)
 
 def fib(n):
     return n if n < 2 else fib(n - 1) + fib(n - 2)
 
-@export
-def fn() -> None:
-    t0 = time()
-    ans = fib(39)
-    try:
-        for i in range(10):
-            # if i >= 2:
-            #     continue
-            a = [0,1][i]
-            print("a:", a)
-            if a != 0:
-                print("1/a:", 1/a)
-    except:
-        print("error")
-    t1 = time()
-    print(f'Computed fib(40) = {ans} in {t1 - t0} seconds.')
+def fake_print(a:str):
+    print(a, 0)
 
-fn()
+seq_print("start main\n")
+print("start main")
+t0 = time()
+ans = fib(39)
+for i in range(10):
+    if i >= 2:
+        continue
+    a = [0,1][i]
+    print("a:", a)
+    if a != 0:
+        print("1/a:", 1/a)
+t1 = time()
+print("Computed fib(40) =", ans, "in", t1 - t0, "seconds.")
+seq_print(f'Computed fib(40) = {ans} in {t1 - t0} seconds.\n')

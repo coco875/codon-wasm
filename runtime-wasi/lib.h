@@ -88,7 +88,7 @@ SEQ_FUNC void *seq_stdin();
 SEQ_FUNC void *seq_stdout();
 SEQ_FUNC void *seq_stderr();
 
-SEQ_FUNC void seq_print(seq_str_t str);
+SEQ_FUNC void seq_print(seq_int_t len, char* str);
 SEQ_FUNC void seq_print_full(seq_int_t len, char *str, FILE *fo);
 
 SEQ_FUNC void *seq_lock_new();
